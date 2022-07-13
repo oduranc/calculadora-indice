@@ -22,6 +22,7 @@ if (token) {
         { name: "Estudiantes", href: "/admin/students" },
         { name: "Profesores", href: "/admin/teachers" },
         { name: "Asignaturas", href: "/admin/subjects" },
+        { name: "Secciones", href: "/admin/sections" },
       ];
       break;
     case "Ivy":
@@ -102,7 +103,7 @@ function ProfileMenu() {
             {({ active }) => (
               <a
                 onClickCapture={logout}
-                href="/login"
+                href="/"
                 className={classNames(
                   active ? "darker-brown" : "",
                   "block px-4 py-2 text-sm text-white"
