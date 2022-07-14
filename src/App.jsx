@@ -6,8 +6,7 @@ import Footer from "./components/Common/Footer";
 import Login from "./components/Common/Login";
 import Profile from "./components/Common/Profile";
 //Admin
-import AdminTeachers from "./components/Admin/AdminTeachers";
-import AdminStudents from "./components/Admin/AdminStudents";
+import AdminUsers from "./components/Admin/AdminUsers";
 import AdminSubjects from "./components/Admin/AdminSubjects";
 import AdminSections from "./components/Admin/AdminSections";
 //Student
@@ -26,8 +25,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/admin/students" element={<AdminStudents />} />
-        <Route exact path="/admin/teachers" element={<AdminTeachers />} />
+        <Route exact path="/admin/students" element={<AdminUsers userType = "Ivy" />} />
+        <Route exact path="/admin/teachers" element={<AdminUsers userType = "Walter" />} />
+        <Route exact path="/admin/admins" element={<AdminUsers userType = "Karn" />} />
         <Route exact path="/admin/subjects" element={<AdminSubjects />} />
         <Route exact path="/admin/sections" element={<AdminSections />} />
         <Route exact path="/student/ranking" element={<StudentRanking />} />

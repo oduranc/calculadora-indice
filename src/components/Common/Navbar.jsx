@@ -21,6 +21,7 @@ if (token) {
       navigation = [
         { name: "Estudiantes", href: "/admin/students" },
         { name: "Profesores", href: "/admin/teachers" },
+        { name: "Administradores", href: "/admin/admins"},
         { name: "Asignaturas", href: "/admin/subjects" },
         { name: "Secciones", href: "/admin/sections" },
       ];
