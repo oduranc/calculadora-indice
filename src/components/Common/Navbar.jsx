@@ -9,30 +9,23 @@ var userType = null;
 var navigation = [];
 
 if (token) {
-  userType = JSON.parse(localStorage.getItem("user"))["fname"];
+  userType = JSON.parse(localStorage.getItem("user"))["role"];
   switch (userType) {
-    /*
-        Karn = admin
-        Ivy = student
-        Walter = teacher
-    */
-    //TODO: Change names to respective usertypes
-    case "Karn":
+    case "Admin":
       navigation = [
         { name: "Estudiantes", href: "/admin/students" },
         { name: "Profesores", href: "/admin/teachers" },
         { name: "Administradores", href: "/admin/admins"},
         { name: "Asignaturas", href: "/admin/subjects" },
-        { name: "Secciones", href: "/admin/sections" },
       ];
       break;
-    case "Ivy":
+    case "Student":
       navigation = [
         { name: "Asignaturas", href: "/student/subjects" },
         { name: "Ranking", href: "/student/ranking" },
       ];
       break;
-    case "Walter":
+    case "Teacher":
       navigation = [
         { name: "Asignaturas", href: "/teacher/subjects" },
       ];

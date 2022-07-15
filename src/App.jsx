@@ -8,7 +8,8 @@ import Profile from "./components/Common/Profile";
 //Admin
 import AdminUsers from "./components/Admin/AdminUsers";
 import AdminSubjects from "./components/Admin/AdminSubjects";
-import AdminSections from "./components/Admin/AdminSections";
+import CreateUsers from "./components/Admin/CreateUsers";
+import CreateSubjects from "./components/Admin/CreateSubjects";
 //Student
 import StudentSubjects from "./components/Student/StudentSubjects";
 import StudentRanking from "./components/Student/StudentRanking";
@@ -25,11 +26,14 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/admin/students" element={<AdminUsers userType = "Ivy" />} />
-        <Route exact path="/admin/teachers" element={<AdminUsers userType = "Walter" />} />
-        <Route exact path="/admin/admins" element={<AdminUsers userType = "Karn" />} />
+        <Route exact path="/admin/students" element={<AdminUsers userType = "Student" />} />
+        <Route exact path="/admin/student/create" element={<CreateUsers userType = "Student" />} />
+        <Route exact path="/admin/teachers" element={<AdminUsers userType = "Teacher" />} />
+        <Route exact path="/admin/teacher/create" element={<CreateUsers userType = "Teacher" />} />
+        <Route exact path="/admin/admins" element={<AdminUsers userType = "Admin" />} />
+        <Route exact path="/admin/admin/create" element={<CreateUsers userType = "Admin" />} />
         <Route exact path="/admin/subjects" element={<AdminSubjects />} />
-        <Route exact path="/admin/sections" element={<AdminSections />} />
+        <Route exact path="/admin/subjects/create" element={<CreateSubjects />} />
         <Route exact path="/student/ranking" element={<StudentRanking />} />
         <Route exact path="/student/subjects" element={<StudentSubjects />} />
         <Route exact path="/teacher/subjects" element={<TeacherSubjects />} />

@@ -6,14 +6,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { deleteField, useStyles } from "../../constants";
-import { TablePagination } from "@material-ui/core";
+import { Button, TablePagination } from "@material-ui/core";
 
 function AdminUsers(props) {
   //TODO: Change API endpoint and related
@@ -22,7 +21,6 @@ function AdminUsers(props) {
   const classes = useStyles();
 
   const [users, setUsers] = useState([]);
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -35,12 +33,12 @@ function AdminUsers(props) {
     setPage(0);
   };
 
-  const userType = props.userType;
   var usersEndpoint = "";
+  var userType = props.userType
 
   function createHeaders() {
     switch (userType) {
-      case "Ivy":
+      case "Student":
         return (
           <>
             <TableCell align="center">ID</TableCell>
@@ -70,7 +68,7 @@ function AdminUsers(props) {
 
   function createRows(row) {
     switch (userType) {
-      case "Ivy":
+      case "Student":
         return (
           <>
             <TableCell align="center" component="th" scope="row">
@@ -97,28 +95,16 @@ function AdminUsers(props) {
         );
     }
   }
-
-  switch (userType) {
-    case "Ivy":
-      usersEndpoint = "https://www.mecallapi.com/api/users";
-      break;
-
-    case "Walter":
-      usersEndpoint = "https://www.mecallapi.com/api/users";
-      break;
-
-    case "Karn":
-      usersEndpoint = "https://www.mecallapi.com/api/users";
-      break;
-
-    default:
-      break;
-  }
+  
+  usersEndpoint = process.env.REACT_APP_API_URL + "users/role/" + userType;
 
   const getUsers = async () => {
-    const response = await fetch(usersEndpoint, { method: "GET" }).then(
-      (response) => response.json()
-    );
+    const response = await fetch(usersEndpoint, {
+      method: "GET",
+      headers: new Headers({
+        "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+      }),
+    }).then((response) => response.json());
     setUsers(response);
   };
 
@@ -129,7 +115,7 @@ function AdminUsers(props) {
 
   function createData(id, document, name, surname, email, degree, gpa, honor) {
     switch (userType) {
-      case "Ivy":
+      case "Student":
         return { id, name, surname, degree, gpa, honor };
       default:
         return { id, document, name, surname, email };
@@ -138,35 +124,45 @@ function AdminUsers(props) {
 
   var rows = users.map(function (user) {
     switch (userType) {
-      case "Ivy":
+      case "Student":
         return createData(
           user.id,
           user.document,
-          user.fname,
-          user.lname,
+          user.names,
+          user.surnames,
           user.email,
-          user.fname + user.lname,
-          user.id,
-          user.lname + user.fname
+          user.programCode,
+          user.gpa,
+          user.honor
         );
       default:
         return createData(
           user.id,
-          user.id + user.fname,
-          user.fname,
-          user.lname,
-          user.username
+          user.document,
+          user.names,
+          user.surnames,
+          user.email
         );
     }
   });
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    window.location.href = "/admin/" + userType + "/create";
+  };
+
   return (
-    <Grid container justifyContent="center">
+    <div>
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5" className="pb-7">
+        <Typography component="h1" variant="h5" className="">
           {userType}
         </Typography>
+        <form noValidate onSubmit={handleSubmit}>
+          <Button type="submit" variant="contained" className={classes.submit}>
+            Añadir
+          </Button>
+        </form>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer component={Paper}>
             <Table
@@ -222,7 +218,7 @@ function AdminUsers(props) {
           />
         </Paper>
       </div>
-    </Grid>
+    </div>
   );
 }
 

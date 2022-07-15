@@ -18,11 +18,20 @@ async function loginUser(credentials) {
 }
 
 async function getUser(id) {
-  return fetch(process.env.REACT_APP_API_URL + "users", {
+  return fetch(process.env.REACT_APP_API_URL + "users/" + id, {
     method: "GET",
-    headers: {
+    headers: new Headers({
       "Authorization": "Bearer " + localStorage.getItem("accessToken"),
-    }    
+    })
+  }).then((response) => response.json());
+}
+
+async function getStudent(id) {
+  return fetch(process.env.REACT_APP_API_URL + "students/" + id, {
+    method: "GET",
+    headers: new Headers({
+      "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+    })
   }).then((response) => response.json());
 }
 
@@ -43,9 +52,13 @@ function Login() {
         icon: "success",
         buttons: false,
         timer: 2000,
-      }).then((value) => {
-        localStorage.setItem("accessToken", response["accessToken"]);
-        localStorage.setItem("user", JSON.stringify(getUser(id)));
+      }).then(async (value) => {
+        localStorage.setItem("accessToken", response["access_token"]);
+        const user = await getUser(id);
+        const student = await getStudent(id);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("student", JSON.stringify(student));
+        console.log(localStorage.getItem("user"));
         window.location.href = "/profile";
       });
     } else {

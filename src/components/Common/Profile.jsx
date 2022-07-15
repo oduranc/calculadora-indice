@@ -7,22 +7,23 @@ import { useStyles } from "../../constants";
 
 function RenderAditionalStudentData(user) {
   // TODO: Change example data to actual data
-  if (user["fname"] === "Ivy") {
+  if (user["role"] === "Student") {
+    const student = localStorage.getItem('student');
     return (
       <>
         <Grid item>
           <Typography component="h2" variant="h6">
-            Carrera: {user["fname"]}
+            Carrera: {student["programCode"]}
           </Typography>
         </Grid>
         <Grid item>
           <Typography component="h2" variant="h6">
-            GPA: {user["id"]}
+            GPA: {student["gpa"]}
           </Typography>
         </Grid>
         <Grid item>
           <Typography component="h2" variant="h6">
-            Honor: {user["avatar"]}
+            Honor: {student["honor"]}
           </Typography>
         </Grid>
       </>
@@ -30,8 +31,10 @@ function RenderAditionalStudentData(user) {
   }
 }
 
+
 function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
+
   const classes = useStyles();
 
   return (
@@ -62,17 +65,17 @@ function Profile() {
           </Grid>
           <Grid item>
             <Typography component="h2" variant="h6">
-              Documento: {user["id"]}
+              Documento: {user["document"]}
             </Typography>
           </Grid>
           <Grid item>
             <Typography component="h2" variant="h6">
-              Nombre: {user["fname"]} {user["lname"]}
+              Nombre: {user["names"]} {user["surnames"]}
             </Typography>
           </Grid>
           <Grid item>
             <Typography component="h2" variant="h6">
-              Rol: {user["fname"]}
+              Rol: {user["role"]}
             </Typography>
           </Grid>
           <Grid item>
