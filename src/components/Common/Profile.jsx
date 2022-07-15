@@ -8,7 +8,7 @@ import { useStyles } from "../../constants";
 function RenderAditionalStudentData(user) {
   // TODO: Change example data to actual data
   if (user["role"] === "Student") {
-    const student = localStorage.getItem('student');
+    const student = JSON.parse(localStorage.getItem('student'));
     return (
       <>
         <Grid item>
@@ -23,7 +23,7 @@ function RenderAditionalStudentData(user) {
         </Grid>
         <Grid item>
           <Typography component="h2" variant="h6">
-            Honor: {student["honor"]}
+            Honor: {!student["honor"] ? "N/A" : student["honor"]}
           </Typography>
         </Grid>
       </>

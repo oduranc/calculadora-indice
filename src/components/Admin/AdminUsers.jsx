@@ -195,7 +195,8 @@ function AdminUsers(props) {
                             //TODO: Change API endpoint and related
                             deleteField(
                               row,
-                              "https://www.mecallapi.com/api/users/delete"
+                              process.env.REACT_APP_API_URL + "users/",
+                              localStorage.getItem('accessToken')
                             );
                           }}
                         >

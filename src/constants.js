@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export function deleteField(row, url) {
+export function deleteField(row, url, token) {
   swal({
     title: "¿Seguro que desea eliminar?",
     text: row.id + '',
@@ -32,7 +32,7 @@ export function deleteField(row, url) {
   }).then(async(willDelete) => {
     if (willDelete) {
       const id = row.id;
-      const response = await deleteFromApi({id}, url)
+      const response = await deleteFromApi({id}, url + row.id, token)
       console.log(response['status']);
       if (response['status'] === 'ok') {
         swal({title: "Se ha borrado el campo con éxito.", icon: "success"});
@@ -45,13 +45,13 @@ export function deleteField(row, url) {
   });
 }
 
-async function deleteFromApi(id, url) {
+async function deleteFromApi(id, url, token) {
   return fetch(url, {
     method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': token,
     },
-    body: JSON.stringify(id)
   })
     .then(res => res.json())
 }
