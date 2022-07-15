@@ -39,8 +39,6 @@ function StudentRanking() {
 		return { id, name, surname, degree, gpa };
 	}
 
-	console.log(students);
-
 	var rows = students.map(function (student) {
 		return createData(
 			student.id,
