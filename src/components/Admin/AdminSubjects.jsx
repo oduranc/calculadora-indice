@@ -21,7 +21,7 @@ function AdminSubjects() {
   const classes = useStyles();
 
   const [subjects, setSubjects] = useState([]);
-  
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -37,9 +37,12 @@ function AdminSubjects() {
   const subjectsEndpoint = "https://calculadora-indice.herokuapp.com/subjects";
 
   const getSubjects = async () => {
-    const response = await fetch(subjectsEndpoint, { method: "GET" }).then(
-      (response) => response.json()
-    );
+    const response = await fetch(subjectsEndpoint, {
+      method: "GET",
+      headers: new Headers({
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      }),
+    }).then((response) => response.json());
     setSubjects(response);
   };
 
@@ -47,23 +50,18 @@ function AdminSubjects() {
     getSubjects();
   }, []);
 
-  function createData(code, name, credits, trimester) {
-    return { code, name, credits, trimester };
+  function createData(code, name, credits) {
+    return { code, name, credits };
   }
 
   var rows = subjects.map(function (subject) {
-    return createData(
-      subject.code,
-      subject.name,
-      subject.credits,
-      subject.trimester
-    );
+    return createData(subject.code, subject.name, subject.credits);
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     window.location.href = "/admin/subjects/create";
-  }
+  };
 
   return (
     <Grid container justifyContent="center">
@@ -86,7 +84,6 @@ function AdminSubjects() {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Trimestre</TableCell>
                   <TableCell align="center">Código</TableCell>
                   <TableCell align="left">Asignatura</TableCell>
                   <TableCell align="center">Créditos</TableCell>
@@ -102,7 +99,6 @@ function AdminSubjects() {
                       key={row.code}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell align="center">{row.trimester}</TableCell>
                       <TableCell align="center" component="th" scope="row">
                         {row.code}
                       </TableCell>
@@ -114,10 +110,18 @@ function AdminSubjects() {
                         </IconButton>
                       </TableCell>
                       <TableCell align="center">
-                        <IconButton aria-label="delete" color="secondary" onClick={() => {
+                        <IconButton
+                          aria-label="delete"
+                          color="secondary"
+                          onClick={() => {
                             //TODO: Change API endpoint and related
-                            deleteField(row, '');
-                          }}>
+                            deleteField(
+                              row,
+                              process.env.REACT_APP_API_URL + "subjects/",
+                              localStorage.getItem("accessToken")
+                            );
+                          }}
+                        >
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>

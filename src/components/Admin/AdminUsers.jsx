@@ -95,8 +95,12 @@ function AdminUsers(props) {
         );
     }
   }
-  
-  usersEndpoint = process.env.REACT_APP_API_URL + "users/role/" + userType;
+
+  if(userType !== "Student") {
+    usersEndpoint = process.env.REACT_APP_API_URL + "users/role/" + userType;
+  } else {
+    usersEndpoint = process.env.REACT_APP_API_URL + "students";
+  }
 
   const getUsers = async () => {
     const response = await fetch(usersEndpoint, {
@@ -128,8 +132,8 @@ function AdminUsers(props) {
         return createData(
           user.id,
           user.document,
-          user.names,
-          user.surnames,
+          user.user.names,
+          user.user.surnames,
           user.email,
           user.programCode,
           user.gpa,
