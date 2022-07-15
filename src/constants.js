@@ -50,7 +50,7 @@ async function deleteFromApi(id, url, token) {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': token,
+      'Authorization': 'Bearer ' + token,
     },
   })
     .then(res => res.json())
