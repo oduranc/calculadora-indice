@@ -9,11 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import { useStyles, deleteField } from "../../constants";
-import { Button, TablePagination } from "@material-ui/core";
+import { useStyles } from "../../constants";
+import { TablePagination } from "@material-ui/core";
 
 function StudentSubjects() {
 	//TODO: Implement Add, Edit and Delete functionalities
@@ -56,8 +53,8 @@ function StudentSubjects() {
 		getSubjects(userId);
 	}, []);
 
-	function createData(code, name, credits, trimester) {
-		return { code, name, credits, trimester };
+	function createData(code, name, credits, trimester, grade) {
+		return { code, name, credits, trimester, grade };
 	}
 
 	var rows = subjects.map(function (subject) {
@@ -66,14 +63,9 @@ function StudentSubjects() {
 			subject.section.subject.name,
 			subject.section.subject.credits,
 			subject.trimester,
-			subject.grades
+			subject.grade
 		);
 	});
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		window.location.href = "/admin/subjects/create";
-	};
 
 	return (
 		<Grid container justifyContent='center'>
@@ -82,15 +74,6 @@ function StudentSubjects() {
 				<Typography component='h1' variant='h5' className='pb-7'>
 					Asignaturas
 				</Typography>
-				<form noValidate onSubmit={handleSubmit}>
-					<Button
-						type='submit'
-						variant='contained'
-						className={classes.submit}
-					>
-						Añadir
-					</Button>
-				</form>
 				<Paper sx={{ width: "100%", overflow: "hidden" }}>
 					<TableContainer component={Paper}>
 						<Table
@@ -148,7 +131,7 @@ function StudentSubjects() {
 												{row.credits}
 											</TableCell>
 											<TableCell align='center'>
-												{row.grades}
+												{row.grade}
 											</TableCell>
 										</TableRow>
 									))}
